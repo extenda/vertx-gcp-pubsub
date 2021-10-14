@@ -1,0 +1,84 @@
+= Extenda Vert.x GCP PubSub client
+A Google Cloud Platform PubSub client implemented in Vert.x.
+It features an opinionated client interface towards PubSub.
+
+image:https://img.shields.io/badge/vert.x-4.1.5-purple.svg[link="https://vertx.io"]
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=code_smells&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+[![MasterStatusBadge](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=pull_request)]
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/extenda/vertx-gcp-pubsub?label=version)]
+
+## Configuration
+
+Minimal configuration is needed.
+
+ SERVICE_PROJECT_ID
+
+This should be set as either a sysProp or an envVar, and should hold the value of your GCP project id.
+
+
+## Usage and Examples
+
+```xml
+<dependency>
+  <groupId>com.extendaretail</groupId>
+  <artifactId>vertx-gcp-pubsub</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
+To use the PubSub client, you need to have Vert.x in your application. As Quarkus is based on Vert.x, it is possible that this library could be utilized in such an application as well.
+
+To use the (optional) service proxy you need to deploy the `PubSubServiceVerticle` somewhere in your application:
+
+```java
+vertx.deployVerticle(new PubSubServiceVerticle()).onComplete(...);
+```
+
+Then, you have some place in the code where you want to use the service. There you call the `createProxy` method of the interface to get a proxy handler to the service. You can then start to execute calls to the service.
+
+```java
+PubSubService pubSubService = PubSubService.createProxy(vertx, PubSubService.address());
+```
+
+There is also an option to skip the default address of the proxy, and use a custom address. You then need to expose the service via a custom ServiceBinder, or handle the eventbus manually to respond to service calls.
+
+```java
+PubSubService pubSubService = PubSubService.createProxy(vertx, "any-address");
+```
+
+Optionally, you can skip the use of the service proxy and simply use the service as-is. You implement a Verticle and call `PubSubService.create(Vertx)` and you then have the service instance.
+
+
+## Documentation
+
+- [https://vertx.io/docs/vertx-core/java/[Vert.x Core]]
+- [https://vertx.io/docs/vertx-service-proxy/java/[Vert.x ServiceProxy]]
+
+## Contribution
+
+Contributions to the project are welcome, but must adhere to a few guidelines:
+
+ * https://www.conventionalcommits.org/en/v1.0.0/[Conventional commits] should be followed
+
+### pre-commit-hooks
+
+Install the pre-commit hooks before you submit code:
+
+ $ pre-commit install -t pre-commit -t commit-msg
+
+== Building
+
+To launch tests:
+```bash
+$ mvn clean verify
+```
+
+To package the library:
+```bash
+$ mvn clean package
+```
+
+
