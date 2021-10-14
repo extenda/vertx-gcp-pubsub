@@ -5,7 +5,6 @@
 
 = Extenda Vert.x GCP PubSub client
 A Google Cloud Platform PubSub client implemented in Vert.x.
-It features an opinionated client interface towards PubSub.
 
 image:{img-vertx-version}[link={uri-vertx}]
 
@@ -25,6 +24,8 @@ This should be set as either a sysProp or an envVar, and should hold the value o
 
 
 == Usage and Examples
+
+You need at least JDK 8.
 
 [source,xml]
 ----
