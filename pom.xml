@@ -21,23 +21,19 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
+    <vertx.version>4.1.5</vertx.version>
+
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-    <!-- Sonar settings -->
-    <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
-    <sonar.jacoco.reportPaths>${project.build.directory}/jacoco.exec, ${user.dir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
-
-    <vertx.version>4.1.5</vertx.version>
     <junit-jupiter.version>5.8.1</junit-jupiter.version>
     <mockito.version>3.12.0</mockito.version>
     <testcontainers.version>1.16.0</testcontainers.version>
     <assertj.version>3.20.2</assertj.version>
-
-    <main.verticle>com.extendaretail.MainVerticle</main.verticle>
-    <launcher.class>io.vertx.core.Launcher</launcher.class>
+    <!-- Sonar settings -->
+    <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
+    <sonar.jacoco.reportPaths>${project.build.directory}/jacoco.exec, ${user.dir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
   </properties>
 
   <scm>
