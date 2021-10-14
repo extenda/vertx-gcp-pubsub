@@ -1,16 +1,21 @@
+:uri-vertx: https://vertx.io
+:img-vertx-version: https://img.shields.io/badge/vert.x-4.1.5-purple.svg
+// :uri-sonar-quality: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
+// :img-sonar-quality: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b
+
 = Extenda Vert.x GCP PubSub client
 A Google Cloud Platform PubSub client implemented in Vert.x.
 It features an opinionated client interface towards PubSub.
 
-image:https://img.shields.io/badge/vert.x-4.1.5-purple.svg[link="https://vertx.io"]
+image:{img-vertx-version}[link={uri-vertx}]
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=code_smells&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-[![MasterStatusBadge](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=pull_request)]
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/extenda/vertx-gcp-pubsub?label=version)]
+//[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+//[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+//[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=code_smells&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
+//[![MasterStatusBadge](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=pull_request)]
+//[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/extenda/vertx-gcp-pubsub?label=version)]
 
-## Configuration
+== Configuration
 
 Minimal configuration is needed.
 
@@ -19,66 +24,115 @@ Minimal configuration is needed.
 This should be set as either a sysProp or an envVar, and should hold the value of your GCP project id.
 
 
-## Usage and Examples
+== Usage and Examples
 
-```xml
+[source,xml]
+----
 <dependency>
   <groupId>com.extendaretail</groupId>
   <artifactId>vertx-gcp-pubsub</artifactId>
   <version>x.y.z</version>
 </dependency>
-```
+----
 
 To use the PubSub client, you need to have Vert.x in your application. As Quarkus is based on Vert.x, it is possible that this library could be utilized in such an application as well.
 
 To use the (optional) service proxy you need to deploy the `PubSubServiceVerticle` somewhere in your application:
 
-```java
+[source,java]
+----
 vertx.deployVerticle(new PubSubServiceVerticle()).onComplete(...);
-```
+----
 
 Then, you have some place in the code where you want to use the service. There you call the `createProxy` method of the interface to get a proxy handler to the service. You can then start to execute calls to the service.
 
-```java
+[source,java]
+----
 PubSubService pubSubService = PubSubService.createProxy(vertx, PubSubService.address());
-```
+----
 
 There is also an option to skip the default address of the proxy, and use a custom address. You then need to expose the service via a custom ServiceBinder, or handle the eventbus manually to respond to service calls.
 
-```java
+[source,java]
+----
 PubSubService pubSubService = PubSubService.createProxy(vertx, "any-address");
-```
+----
 
 Optionally, you can skip the use of the service proxy and simply use the service as-is. You implement a Verticle and call `PubSubService.create(Vertx)` and you then have the service instance.
 
 
-## Documentation
+== Documentation
 
 - [https://vertx.io/docs/vertx-core/java/[Vert.x Core]]
 - [https://vertx.io/docs/vertx-service-proxy/java/[Vert.x ServiceProxy]]
 
-## Contribution
+== Contribution
 
 Contributions to the project are welcome, but must adhere to a few guidelines:
 
  * https://www.conventionalcommits.org/en/v1.0.0/[Conventional commits] should be followed
 
-### pre-commit-hooks
+=== pre-commit-hooks
 
 Install the pre-commit hooks before you submit code:
 
- $ pre-commit install -t pre-commit -t commit-msg
+[source,bash]
+----
+$ pre-commit install -t pre-commit -t commit-msg
+----
 
 == Building
 
 To launch tests:
-```bash
+[source,bash]
+----
 $ mvn clean verify
-```
+----
 
 To package the library:
-```bash
+[source,bash]
+----
 $ mvn clean package
-```
+----
 
+== Maven dependencies
+
+These are the dependencies you need to have in your POM for the plugin to work
+
+[source,xml]
+----
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-stack-depchain</artifactId>
+        <version>${vertx.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>libraries-bom</artifactId>
+        <version>${google-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-service-proxy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-pubsub</artifactId>
+    </dependency>
+  </dependencies>
+----
 
