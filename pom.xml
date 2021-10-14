@@ -8,12 +8,25 @@
   <artifactId>vertx-gcp-pubsub</artifactId>
   <version>0.0.1-local</version>
 
+  <name>Vert.x GCP Pubsub client</name>
+  <description>Project to ease interaction with GCP Pubsub in Vert.x applications</description>
+  <url>https://github.com/extenda/vertx-gcp-pubsub</url>
+
   <licenses>
     <license>
-      <name>The Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
     </license>
   </licenses>
+
+  <developers>
+    <developer>
+      <email>thomas.cederholm@extendaretail.com</email>
+      <name>Thomas Cederholm</name>
+      <url>https://github.com/thced</url>
+      <id>thced</id>
+    </developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
