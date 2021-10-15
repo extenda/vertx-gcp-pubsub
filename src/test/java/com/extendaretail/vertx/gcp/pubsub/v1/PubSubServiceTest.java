@@ -1,5 +1,7 @@
 package com.extendaretail.vertx.gcp.pubsub.v1;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.vertx.core.Vertx;
 import io.vertx.junit5.*;
 import io.vertx.junit5.Timeout;
@@ -18,6 +20,9 @@ class PubSubServiceTest {
     // Set up Eventbus mock
     vertx.eventBus().consumer("test-address", message -> message.reply(null));
 
-    service.publish(new PubSubMessage()).onComplete(testContext.succeedingThenComplete());
+    service
+        .publish(new PubSubMessage())
+        .onComplete(ar -> testContext.verify(() -> assertThat(ar.succeeded()).isTrue()))
+        .onComplete(testContext.succeedingThenComplete());
   }
 }
