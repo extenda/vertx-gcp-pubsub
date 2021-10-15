@@ -3,6 +3,7 @@ package com.extendaretail.vertx.gcp.pubsub.v1;
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.core.json.JsonObject;
+import java.util.Map;
 
 /**
  * Value object to send a PubSub message via {@link PubSubService}
@@ -14,10 +15,12 @@ public class PubSubMessage {
 
   private String topic;
   private JsonObject message;
+  private Map<String, String> attributes;
 
   public PubSubMessage() {
     this.topic = null;
     this.message = null;
+    this.attributes = null;
   }
 
   public PubSubMessage(JsonObject json) {
@@ -47,6 +50,16 @@ public class PubSubMessage {
   @Fluent
   public PubSubMessage setMessage(JsonObject message) {
     this.message = message;
+    return this;
+  }
+
+  public Map<String, String> getAttributes() {
+    return attributes;
+  }
+
+  @Fluent
+  public PubSubMessage setAttributes(Map<String, String> attributes) {
+    this.attributes = attributes;
     return this;
   }
 }

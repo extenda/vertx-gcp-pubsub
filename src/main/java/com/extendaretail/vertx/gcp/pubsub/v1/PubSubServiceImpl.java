@@ -6,6 +6,7 @@ import com.google.api.core.ApiFutures;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import com.google.pubsub.v1.PubsubMessage.Builder;
 import com.google.pubsub.v1.TopicName;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -45,7 +46,8 @@ import java.util.concurrent.Executor;
       try {
         JsonObject payload = message.getMessage();
         String topic = message.getTopic();
-        PubsubMessage pubsubMessage = newPubSubMessage(jsonObjectToByteString(payload));
+        Map<String, String> attributes = message.getAttributes();
+        PubsubMessage pubsubMessage = newPubSubMessage(attributes, jsonObjectToByteString(payload));
         ApiFuture<String> messageFuture = getPublisher(topic).publish(pubsubMessage);
 
         ApiFutures.addCallback(messageFuture, new PubSubCallback(p), getExecutor());
@@ -70,8 +72,12 @@ import java.util.concurrent.Executor;
     return Publisher.newBuilder(topicName).build();
   }
 
-  private PubsubMessage newPubSubMessage(ByteString data) {
-    return PubsubMessage.newBuilder().setData(data).build();
+  private PubsubMessage newPubSubMessage(Map<String, String> attributes, ByteString data) {
+    Builder builder = PubsubMessage.newBuilder();
+    if (attributes != null && !attributes.isEmpty()) {
+      builder.putAllAttributes(attributes);
+    }
+    return builder.setData(data).build();
   }
 
   private ByteString jsonObjectToByteString(JsonObject jsonObject) {
