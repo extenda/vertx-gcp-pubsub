@@ -57,19 +57,4 @@ class PubSubServiceImplTest {
         .publish(new PubSubMessage().setTopic("a-topic"))
         .onComplete(testContext.failingThenComplete());
   }
-
-  @Test
-  @Timeout(2000)
-  void testGetPublisherDoesNotContainPublisher(
-      Vertx vertx, VertxTestContext testContext, Tooling tooling) {
-
-    System.setProperty("SERVICE_PROJECT_ID", tooling.getProjectId());
-
-    PubSubServiceImpl service = new PubSubServiceImpl(vertx);
-    service.getPublishers().clear();
-
-    service
-        .publish(new PubSubMessage().setTopic("a-topic").setMessage(new JsonObject()))
-        .onComplete(testContext.failingThenComplete());
-  }
 }
