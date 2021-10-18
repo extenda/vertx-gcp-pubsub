@@ -101,6 +101,16 @@
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-client</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
       <artifactId>vertx-service-proxy</artifactId>
       <optional>true</optional>
     </dependency>
@@ -116,6 +126,11 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-client</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-junit5</artifactId>
@@ -173,15 +188,6 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <argLine>@{argLine} -Dfile.encoding=UTF-8</argLine>
-          <parallel>all</parallel>
-          <useUnlimitedThreads>true</useUnlimitedThreads>
-          <properties>
-            <configurationParameters>
-              junit.jupiter.execution.parallel.enabled = true
-              junit.jupiter.execution.parallel.mode.default = same_thread
-              junit.jupiter.execution.parallel.mode.classes.default = concurrent
-            </configurationParameters>
-          </properties>
         </configuration>
       </plugin>
       <plugin>

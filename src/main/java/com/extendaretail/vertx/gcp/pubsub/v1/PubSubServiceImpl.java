@@ -50,7 +50,7 @@ import java.util.concurrent.Executor;
         PubsubMessage pubsubMessage = newPubSubMessage(attributes, jsonObjectToByteString(payload));
         ApiFuture<String> messageFuture = getPublisher(topic).publish(pubsubMessage);
 
-        ApiFutures.addCallback(messageFuture, new PubSubCallback(p), getExecutor());
+        ApiFutures.addCallback(messageFuture, new InternalCallback(p), getExecutor());
       } catch (Exception e) {
         p.fail(e);
       }
@@ -99,11 +99,11 @@ import java.util.concurrent.Executor;
   }
 
   /** Encapsulating class to map callbacks to the success or failure of the Promise. */
-  private static class PubSubCallback implements ApiFutureCallback<String> {
+  private static class InternalCallback implements ApiFutureCallback<String> {
 
     private final Promise<Void> completionPromise;
 
-    public PubSubCallback(Promise<Void> promise) {
+    public InternalCallback(Promise<Void> promise) {
       this.completionPromise = promise;
     }
 
