@@ -54,6 +54,20 @@
     <tag>HEAD</tag>
   </scm>
 
+  <distributionManagement>
+    <repository>
+      <id>repo.extenda.io</id>
+      <name>Extenda Retail Releases</name>
+      <url>https://repo.extenda.io/repository/maven-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>repo.extenda.io</id>
+      <name>Extenda Retail Snapshots</name>
+      <url>https://repo.extenda.io/repository/maven-snapshots</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
