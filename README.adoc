@@ -1,18 +1,18 @@
 :uri-vertx: https://vertx.io
 :img-vertx-version: https://img.shields.io/badge/vert.x-4.1.5-purple.svg
-// :uri-sonar-quality: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
-// :img-sonar-quality: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b
+:uri-sonar-quality: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
+:img-sonar-quality: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b
+:img-sonar-coverage: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b
+:uri-sonar-coverage: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
+:uri-code-smells: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
+:img-code-smells: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=code_smells&token=f272b17dd0e9a54a8200e11437da26890514803b
+:uri-latest-tag:
+:img-latest-tag: https://img.shields.io/github/v/tag/extenda/vertx-gcp-pubsub?label=version
 
 = Extenda Vert.x GCP PubSub client
 A Google Cloud Platform PubSub client implemented in Vert.x.
 
-image:{img-vertx-version}[link={uri-vertx}]
-
-//[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-//[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-//[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=code_smells&token=f272b17dd0e9a54a8200e11437da26890514803b)](https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub)
-//[![MasterStatusBadge](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=pull_request)]
-//[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/extenda/vertx-gcp-pubsub?label=version)]
+image:{img-latest-tag}[] image:{img-vertx-version}[link={uri-vertx}] image:{img-sonar-quality}[link={uri-sonar-quality}] image:{img-sonar-coverage}[link={uri-sonar-coverage}] image:{img-code-smells}[link={uri-code-smells}]
 
 == Configuration
 
