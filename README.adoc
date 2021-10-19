@@ -65,8 +65,8 @@ The library contains a DTO entity (`PubSubMessage`) that is used to publish a me
 
 == Documentation
 
-- [https://vertx.io/docs/vertx-core/java/[Vert.x Core]]
-- [https://vertx.io/docs/vertx-service-proxy/java/[Vert.x ServiceProxy]]
+- https://vertx.io/docs/vertx-core/java/[Vert.x Core]
+- https://vertx.io/docs/vertx-service-proxy/java/[Vert.x ServiceProxy]
 
 == Contribution
 
