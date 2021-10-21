@@ -15,18 +15,21 @@ public class Tooling {
   private final SubscriberStub subscriber;
   private final String subscriptionId;
   private final String projectId;
+  private final String hostPort;
 
   protected Tooling(
       Publisher publisher,
       String topicId,
       SubscriberStub subscriber,
       String subscriptionId,
-      String projectId) {
+      String projectId,
+      String hostPort) {
     this.publisher = publisher;
     this.topicId = topicId;
     this.subscriber = subscriber;
     this.subscriptionId = subscriptionId;
     this.projectId = projectId;
+    this.hostPort = hostPort;
   }
 
   public Publisher getPublisher() {
@@ -47,5 +50,9 @@ public class Tooling {
 
   public String getProjectId() {
     return projectId;
+  }
+
+  public String getHostPort() {
+    return hostPort;
   }
 }

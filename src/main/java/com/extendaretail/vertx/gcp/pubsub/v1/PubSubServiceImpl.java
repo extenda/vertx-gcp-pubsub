@@ -69,7 +69,11 @@ import java.util.concurrent.Executor;
 
   private Publisher createPublisher(String topic) throws IOException {
     TopicName topicName = getTopicName(topic);
-    return Publisher.newBuilder(topicName).build();
+    Publisher.Builder builder = Publisher.newBuilder(topicName);
+    if (System.getProperty("PUBSUB_EMULATOR_HOST", System.getenv("PUBSUB_EMULATOR_HOST")) != null) {
+      EmulatorRedirect.redirect(builder);
+    }
+    return builder.build();
   }
 
   private PubsubMessage newPubSubMessage(Map<String, String> attributes, ByteString data) {

@@ -97,7 +97,7 @@ public class PubSubContainerExtension
       e.printStackTrace();
     }
 
-    return new Tooling(publisher, topicId, subscriber, subscriptionId, PROJECT_ID);
+    return new Tooling(publisher, topicId, subscriber, subscriptionId, PROJECT_ID, hostPort);
   }
 
   private void createTopic(
