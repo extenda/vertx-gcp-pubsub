@@ -43,7 +43,8 @@ class PubSubServiceImplTest {
 
   @Test
   @Timeout(5000)
-  void testEmulatorPublisherCreation(Vertx vertx, VertxTestContext testContext, Tooling tooling) {
+  void testEmulatorPublisherCreation(
+      Vertx vertx, VertxTestContext testContext, Tooling tooling) { // NOSONAR
     System.setProperty("PUBSUB_EMULATOR_HOST", tooling.getHostPort());
     System.setProperty("SERVICE_PROJECT_ID", tooling.getProjectId());
 
