@@ -18,7 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class PubSubServiceImplTest {
 
   @Test
-  @Timeout(2000)
+  @Timeout(5000)
   void testProxyCall(Vertx vertx, VertxTestContext testContext, Tooling tooling) { // NOSONAR
     PubSubServiceImpl service = new PubSubServiceImpl(vertx);
     service.getPublishers().put(tooling.getTopicId(), tooling.getPublisher());
@@ -30,7 +30,7 @@ class PubSubServiceImplTest {
   }
 
   @Test
-  @Timeout(2000)
+  @Timeout(5000)
   void testFailureWithoutPubSubConfigPresent(
       Vertx vertx, VertxTestContext testContext, Tooling tooling) {
     PubSubServiceImpl service = new PubSubServiceImpl(vertx);
@@ -42,7 +42,29 @@ class PubSubServiceImplTest {
   }
 
   @Test
-  @Timeout(2000)
+  @Timeout(5000)
+  void testEmulatorPublisherCreation( // NOSONAR
+      Vertx vertx, VertxTestContext testContext, Tooling tooling) {
+    System.setProperty("PUBSUB_EMULATOR_HOST", tooling.getHostPort());
+    System.setProperty("SERVICE_PROJECT_ID", tooling.getProjectId());
+
+    PubSubServiceImpl service = new PubSubServiceImpl(vertx);
+
+    PubSubMessage message =
+        new PubSubMessage().setTopic(tooling.getTopicId()).setMessage(new JsonObject());
+
+    service
+        .publish(message)
+        .onComplete(
+            ignore -> {
+              System.clearProperty("PUBSUB_EMULATOR_HOST");
+              System.clearProperty("SERVICE_PROJECT_ID");
+            })
+        .onComplete(testContext.succeedingThenComplete());
+  }
+
+  @Test
+  @Timeout(5000)
   void testFailedPubSubMessage(
       Vertx vertx, VertxTestContext testContext, @Mock Publisher publisher) {
     Throwable exception = new RuntimeException("expected from test");
