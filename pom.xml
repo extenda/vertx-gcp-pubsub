@@ -230,7 +230,6 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-maven-plugin.version}</version>
         <configuration>
-          <
           <excludes>
             <!-- We exclude generated classes from coverage -->
             <exclude>**/*VertxProxyHandler.class</exclude>
