@@ -51,7 +51,6 @@ class Base64DecodingHandlerTest {
   @Timeout(5000)
   @DisplayName("Should be able to decode payload from PubSub message")
   void testPayloadDecode(Vertx vertx, VertxTestContext testContext) {
-
     String pubSubData = new JsonObject().put("testKey", "testValue").encode();
     String encoded = encoder.encodeToString(pubSubData.getBytes());
     data.writeJson(testJson, encoded, true);
@@ -79,11 +78,14 @@ class Base64DecodingHandlerTest {
   @Timeout(5000)
   @DisplayName("Should fail to decode payload from PubSub message")
   void testBadPayloadDecode(Vertx vertx, VertxTestContext testContext) {
-
     JsonObject pubSubData = new JsonObject().put("testKey", "testValue");
 
     Route route =
-        router.post("/").handler(new Base64DecodingHandler()).handler(RoutingContext::end);
+        router
+            .post("/")
+            .handler(new Base64DecodingHandler())
+            .handler(RoutingContext::end)
+            .failureHandler(ctx -> ctx.response().setStatusCode(400).end());
 
     WebClient.create(vertx)
         .post(port, "localhost", "/")
