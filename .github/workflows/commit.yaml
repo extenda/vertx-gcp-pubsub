@@ -13,6 +13,7 @@ jobs:
           with:
             distribution: 'temurin'
             java-version: 8
+            cache: 'maven'
 
         - name: Run tests
           uses: extenda/actions/maven@v0
@@ -24,6 +25,7 @@ jobs:
           with:
             distribution: 'temurin'
             java-version: 11
+            cache: 'maven'
 
         - name: Scan with SonarCloud
           uses: extenda/actions/sonar-scanner@v0
@@ -47,6 +49,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 8
+          cache: 'maven'
 
       - name: Create release
         uses: extenda/actions/conventional-release@v0
