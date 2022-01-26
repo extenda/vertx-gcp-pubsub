@@ -7,9 +7,7 @@ import io.vertx.core.json.JsonObject;
 import java.util.Map;
 
 /**
- * Value object to send a PubSub message via {@link PubSubService}. While you can set both a Vertx
- * {@link JsonObject} and {@link Buffer} for the payload type, the {@link Buffer} takes precedence
- * and byte[] will only be used if no {@link Buffer} is set.
+ * Value object to send a PubSub message via {@link PubSubService}.
  *
  * @author thced
  */
