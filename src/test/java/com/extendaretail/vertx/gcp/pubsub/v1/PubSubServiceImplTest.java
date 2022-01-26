@@ -49,10 +49,17 @@ class PubSubServiceImplTest {
             .setMessage(new JsonObject(jsonPayload))
             .setBufferMessage(bufferMessageToBeIgnored);
 
-    service.publish(message).onComplete(testContext.succeedingThenComplete());
+    Checkpoint publish = testContext.checkpoint();
+    Checkpoint assertLastMessage = testContext.checkpoint();
 
-    assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
-        .isEqualTo(jsonPayload);
+    service.publish(message).onComplete(ignore -> publish.flag());
+
+    testContext.verify(
+        () -> {
+          assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
+              .isEqualTo(jsonPayload);
+          assertLastMessage.flag();
+        });
   }
 
   @Test
@@ -69,10 +76,17 @@ class PubSubServiceImplTest {
             .setTopic(tooling.getTopicId())
             .setBufferMessage(Buffer.buffer(bufferMessagePayload.getBytes(StandardCharsets.UTF_8)));
 
-    service.publish(message).onComplete(testContext.succeedingThenComplete());
+    Checkpoint publish = testContext.checkpoint();
+    Checkpoint assertLastMessage = testContext.checkpoint();
 
-    assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
-        .isEqualTo(bufferMessagePayload);
+    service.publish(message).onComplete(ignore -> publish.flag());
+
+    testContext.verify(
+        () -> {
+          assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
+              .isEqualTo(bufferMessagePayload);
+          assertLastMessage.flag();
+        });
   }
 
   @Test
