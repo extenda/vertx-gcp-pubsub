@@ -2,6 +2,11 @@ package com.extendaretail.vertx.gcp.pubsub.v1;
 
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.cloud.pubsub.v1.stub.SubscriberStub;
+import com.google.pubsub.v1.ProjectSubscriptionName;
+import com.google.pubsub.v1.PullRequest;
+import com.google.pubsub.v1.PullResponse;
+import com.google.pubsub.v1.ReceivedMessage;
+import java.util.List;
 
 /**
  * Add as test method parameter to get references to the publisher and the subscriber, within tests.
@@ -54,5 +59,15 @@ public class Tooling {
 
   public String getHostPort() {
     return hostPort;
+  }
+
+  public List<ReceivedMessage> receiveMessages(int amountOfMessagesToPull) {
+    PullRequest pullRequest =
+        PullRequest.newBuilder()
+            .setMaxMessages(amountOfMessagesToPull)
+            .setSubscription(ProjectSubscriptionName.format(projectId, subscriptionId))
+            .build();
+    PullResponse pullResponse = subscriber.pullCallable().call(pullRequest);
+    return pullResponse.getReceivedMessagesList();
   }
 }
