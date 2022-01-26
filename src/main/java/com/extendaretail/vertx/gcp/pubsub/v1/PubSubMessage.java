@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject;
 import java.util.Map;
 
 /**
- * Value object to send a PubSub message via {@link PubSubService}.
+ * Value object to send a PubSub message via {@link PubSubService}
  *
  * @author thced
  */
