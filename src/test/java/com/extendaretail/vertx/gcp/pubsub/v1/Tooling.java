@@ -6,7 +6,6 @@ import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.PullRequest;
 import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.ReceivedMessage;
-import java.util.List;
 
 /**
  * Add as test method parameter to get references to the publisher and the subscriber, within tests.
@@ -61,13 +60,13 @@ public class Tooling {
     return hostPort;
   }
 
-  public List<ReceivedMessage> receiveMessages(int amountOfMessagesToPull) {
+  public ReceivedMessage receiveLastMessage() {
     PullRequest pullRequest =
         PullRequest.newBuilder()
-            .setMaxMessages(amountOfMessagesToPull)
+            .setMaxMessages(1)
             .setSubscription(ProjectSubscriptionName.format(projectId, subscriptionId))
             .build();
     PullResponse pullResponse = subscriber.pullCallable().call(pullRequest);
-    return pullResponse.getReceivedMessagesList();
+    return pullResponse.getReceivedMessages(0);
   }
 }

@@ -79,7 +79,7 @@ public class PubSubContainerExtension
     SubscriberStub subscriber = null;
 
     String topicId = generateRandomTopicId();
-    String subscriptionId = "test";
+    String subscriptionId = generateRandomSubscriptionId();
 
     try {
       createTopic(topicId, channelProvider, credentialsProvider);
@@ -106,8 +106,16 @@ public class PubSubContainerExtension
     return new Tooling(publisher, topicId, subscriber, subscriptionId, PROJECT_ID, hostPort);
   }
 
+  private String generateRandomSubscriptionId() {
+    return "testSubscription" + randomAlphanumericString();
+  }
+
   private String generateRandomTopicId() {
-    return "testTopic" + UUID.randomUUID().toString().split("-")[0];
+    return "testTopic" + randomAlphanumericString();
+  }
+
+  private String randomAlphanumericString() {
+    return UUID.randomUUID().toString().split("-")[0];
   }
 
   private void createTopic(
