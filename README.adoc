@@ -61,7 +61,9 @@ PubSubService pubSubService = PubSubService.createProxy(vertx, "any-address");
 
 Optionally, you can skip the use of the service proxy and simply use the service as-is. You implement a Verticle and call `PubSubService.create(Vertx)` and you then have the service instance.
 
-The library contains a DTO entity (`PubSubMessage`) that is used to publish a message via the service. This DTO contains a topic id, and a payload. The PubSubService is able to maintain multiple PubSub publishers for different topic ids and will set up new publishers for any new, unknown, topic ids. Because of this, it is recommended to deploy this service once in your application.
+The library contains a DTO entity (`PubSubMessage`) that is used to publish a message via the service. This DTO contains a topic id, and a payload. While you can set both `JsonObject` and `byte[]` for the payload type, the `JsonObject` takes precedence and `byte[]` will only be used if no `JsonObject` is set.
+
+The PubSubService is able to maintain multiple PubSub publishers for different topic ids and will set up new publishers for any new, unknown, topic ids. Because of this, it is recommended to deploy this service once in your application.
 
 == Documentation
 
