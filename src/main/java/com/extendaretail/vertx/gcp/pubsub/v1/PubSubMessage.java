@@ -2,6 +2,7 @@ package com.extendaretail.vertx.gcp.pubsub.v1;
 
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.codegen.annotations.Fluent;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import java.util.Map;
 
@@ -15,12 +16,14 @@ public class PubSubMessage {
 
   private String topic;
   private JsonObject message;
+  private Buffer bufferMessage;
   private Map<String, String> attributes;
 
   public PubSubMessage() {
     this.topic = null;
     this.message = null;
     this.attributes = null;
+    this.bufferMessage = null;
   }
 
   public PubSubMessage(JsonObject json) {
@@ -60,6 +63,16 @@ public class PubSubMessage {
   @Fluent
   public PubSubMessage setAttributes(Map<String, String> attributes) {
     this.attributes = attributes;
+    return this;
+  }
+
+  public Buffer getBufferMessage() {
+    return bufferMessage;
+  }
+
+  @Fluent
+  public PubSubMessage setBufferMessage(Buffer bufferMessage) {
+    this.bufferMessage = bufferMessage;
     return this;
   }
 }

@@ -12,6 +12,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.impl.VertxImpl;
 import io.vertx.core.json.JsonObject;
 import io.vertx.serviceproxy.ServiceException;
@@ -44,10 +45,11 @@ import java.util.concurrent.Executor;
   private Handler<Promise<Void>> publishInternal(PubSubMessage message) {
     return p -> {
       try {
-        JsonObject payload = message.getMessage();
+        JsonObject jsonPayload = message.getMessage();
+        Buffer buffer = jsonPayload == null ? message.getBufferMessage() : jsonPayload.toBuffer();
         String topic = message.getTopic();
         Map<String, String> attributes = message.getAttributes();
-        PubsubMessage pubsubMessage = newPubSubMessage(attributes, jsonObjectToByteString(payload));
+        PubsubMessage pubsubMessage = newPubSubMessage(attributes, bufferToByteString(buffer));
         ApiFuture<String> messageFuture = getPublisher(topic).publish(pubsubMessage);
 
         ApiFutures.addCallback(messageFuture, new InternalCallback(p), getExecutor());
@@ -84,8 +86,8 @@ import java.util.concurrent.Executor;
     return builder.setData(data).build();
   }
 
-  private ByteString jsonObjectToByteString(JsonObject jsonObject) {
-    return ByteString.copyFrom(jsonObject.toBuffer().getBytes());
+  private ByteString bufferToByteString(Buffer buffer) {
+    return ByteString.copyFrom(buffer.getBytes());
   }
 
   private Executor getExecutor() {

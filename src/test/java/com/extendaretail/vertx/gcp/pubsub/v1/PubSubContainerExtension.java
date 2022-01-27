@@ -19,7 +19,13 @@ import com.google.pubsub.v1.TopicName;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
-import org.junit.jupiter.api.extension.*;
+import java.util.UUID;
+import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import org.testcontainers.containers.PubSubEmulatorContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -72,8 +78,8 @@ public class PubSubContainerExtension
     Publisher publisher = null;
     SubscriberStub subscriber = null;
 
-    String topicId = "test1";
-    String subscriptionId = "test";
+    String topicId = generateRandomTopicId();
+    String subscriptionId = generateRandomSubscriptionId();
 
     try {
       createTopic(topicId, channelProvider, credentialsProvider);
@@ -98,6 +104,18 @@ public class PubSubContainerExtension
     }
 
     return new Tooling(publisher, topicId, subscriber, subscriptionId, PROJECT_ID, hostPort);
+  }
+
+  private String generateRandomSubscriptionId() {
+    return "testSubscription" + randomAlphanumericString();
+  }
+
+  private String generateRandomTopicId() {
+    return "testTopic" + randomAlphanumericString();
+  }
+
+  private String randomAlphanumericString() {
+    return UUID.randomUUID().toString().split("-")[0];
   }
 
   private void createTopic(

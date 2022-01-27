@@ -1,14 +1,17 @@
 package com.extendaretail.vertx.gcp.pubsub.v1;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
 import com.google.api.core.ApiFutures;
 import com.google.cloud.pubsub.v1.Publisher;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.junit5.*;
 import io.vertx.junit5.Timeout;
+import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 import org.mockito.Mock;
@@ -27,6 +30,63 @@ class PubSubServiceImplTest {
         new PubSubMessage().setTopic(tooling.getTopicId()).setMessage(new JsonObject());
 
     service.publish(message).onComplete(testContext.succeedingThenComplete());
+  }
+
+  @Test
+  @Timeout(5000)
+  void testJsonObjectDataShouldTakePrecedenceOverBufferMessage(
+      Vertx vertx, VertxTestContext testContext, Tooling tooling) { // NOSONAR
+    PubSubServiceImpl service = new PubSubServiceImpl(vertx);
+    service.getPublishers().put(tooling.getTopicId(), tooling.getPublisher());
+
+    String jsonPayload = "{\"message\":\"Hello World\"}";
+    Buffer bufferMessageToBeIgnored =
+        Buffer.buffer("ByteArrayMessage".getBytes(StandardCharsets.UTF_8));
+
+    PubSubMessage message =
+        new PubSubMessage()
+            .setTopic(tooling.getTopicId())
+            .setMessage(new JsonObject(jsonPayload))
+            .setBufferMessage(bufferMessageToBeIgnored);
+
+    Checkpoint publish = testContext.checkpoint();
+    Checkpoint assertLastMessage = testContext.checkpoint();
+
+    service.publish(message).onComplete(ignore -> publish.flag());
+
+    testContext.verify(
+        () -> {
+          assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
+              .isEqualTo(jsonPayload);
+          assertLastMessage.flag();
+        });
+  }
+
+  @Test
+  @Timeout(5000)
+  void testSendingBufferMessageToPubSub(
+      Vertx vertx, VertxTestContext testContext, Tooling tooling) { // NOSONAR
+    PubSubServiceImpl service = new PubSubServiceImpl(vertx);
+    service.getPublishers().put(tooling.getTopicId(), tooling.getPublisher());
+
+    String bufferMessagePayload = "ByteArrayBufferMessage";
+
+    PubSubMessage message =
+        new PubSubMessage()
+            .setTopic(tooling.getTopicId())
+            .setBufferMessage(Buffer.buffer(bufferMessagePayload.getBytes(StandardCharsets.UTF_8)));
+
+    Checkpoint publish = testContext.checkpoint();
+    Checkpoint assertLastMessage = testContext.checkpoint();
+
+    service.publish(message).onComplete(ignore -> publish.flag());
+
+    testContext.verify(
+        () -> {
+          assertThat(tooling.receiveLastMessage().getMessage().getData().toStringUtf8())
+              .isEqualTo(bufferMessagePayload);
+          assertLastMessage.flag();
+        });
   }
 
   @Test

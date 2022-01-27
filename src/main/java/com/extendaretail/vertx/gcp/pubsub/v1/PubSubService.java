@@ -3,6 +3,8 @@ package com.extendaretail.vertx.gcp.pubsub.v1;
 import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.JsonObject;
 import io.vertx.serviceproxy.ServiceException;
 
 /**
@@ -46,7 +48,9 @@ public interface PubSubService {
   }
 
   /**
-   * Publish a message on PubSub
+   * Publish a message on PubSub. While you can set both a Vertx {@link JsonObject} and {@link
+   * Buffer} for the payload type, the {@link JsonObject} takes precedence. {@link Buffer} will only
+   * be used for the payload if not {@link JsonObject} is set.
    *
    * @param message The message to send
    * @return Future containing the result, or a failure
