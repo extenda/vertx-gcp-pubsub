@@ -63,6 +63,9 @@ local.properties
 .idea/vcs.xml
 .idea/dictionaries
 .idea/sonarlint
+.idea/*
+!.idea/runConfigurations/
+!.idea/runConfigurations/*
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

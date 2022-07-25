@@ -91,7 +91,7 @@ import java.util.concurrent.Executor;
   }
 
   private Executor getExecutor() {
-    return ((VertxImpl) vertx).getWorkerPool();
+    return ((VertxImpl) vertx).getWorkerPool().executor();
   }
 
   private TopicName getTopicName(String topic) {

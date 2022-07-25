@@ -1,5 +1,5 @@
 :uri-vertx: https://vertx.io
-:img-vertx-version: https://img.shields.io/badge/vert.x-4.2.7-purple.svg
+:img-vertx-version: https://img.shields.io/badge/vert.x-4.3.2-purple.svg
 :uri-sonar-quality: https://sonarcloud.io/dashboard?id=extenda_vertx-gcp-pubsub
 :img-sonar-quality: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=alert_status&token=f272b17dd0e9a54a8200e11437da26890514803b
 :img-sonar-coverage: https://sonarcloud.io/api/project_badges/measure?project=extenda_vertx-gcp-pubsub&metric=coverage&token=f272b17dd0e9a54a8200e11437da26890514803b
