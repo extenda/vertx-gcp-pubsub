@@ -36,15 +36,15 @@
 
     <vertx.version>4.3.2</vertx.version>
 
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-    <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-    <junit-jupiter.version>5.8.1</junit-jupiter.version>
-    <mockito.version>4.1.0</mockito.version>
-    <testcontainers.version>1.17.1</testcontainers.version>
-    <assertj.version>3.22.0</assertj.version>
+    <jacoco-maven-plugin.version>0.8.9</jacoco-maven-plugin.version>
+    <junit-jupiter.version>5.9.2</junit-jupiter.version>
+    <mockito.version>4.11.0</mockito.version>
+    <testcontainers.version>1.18.0</testcontainers.version>
+    <assertj.version>3.24.2</assertj.version>
     <!-- Sonar settings -->
     <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
     <sonar.jacoco.reportPaths>${project.build.directory}/jacoco.exec, ${user.dir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
@@ -88,7 +88,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>libraries-bom</artifactId>
-        <version>24.1.0</version>
+        <version>26.12.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
