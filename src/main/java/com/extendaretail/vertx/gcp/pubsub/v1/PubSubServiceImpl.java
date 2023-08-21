@@ -13,7 +13,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
-import io.vertx.core.impl.VertxImpl;
+import io.vertx.core.impl.VertxInternal;
 import io.vertx.core.json.JsonObject;
 import io.vertx.serviceproxy.ServiceException;
 import java.io.IOException;
@@ -91,7 +91,7 @@ import java.util.concurrent.Executor;
   }
 
   private Executor getExecutor() {
-    return ((VertxImpl) vertx).getWorkerPool().executor();
+    return ((VertxInternal) vertx).getWorkerPool().executor();
   }
 
   private TopicName getTopicName(String topic) {
