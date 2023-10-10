@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.Objects;
+
 
 /**
  * Implementation of the PubSubService client code.
@@ -96,6 +98,10 @@ import java.util.concurrent.Executor;
 
   private TopicName getTopicName(String topic) {
     String project = System.getProperty(PROJECT_ID, System.getenv(PROJECT_ID));
+
+    // Check if project is empty or null
+    Objects.requireNonNull(projectId, "PROJECT_ID has to be set either as a System variable or Environment variable");
+    
     return TopicName.of(project, topic);
   }
 
