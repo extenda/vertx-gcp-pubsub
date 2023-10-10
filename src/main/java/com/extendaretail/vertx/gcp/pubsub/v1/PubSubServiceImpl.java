@@ -100,7 +100,7 @@ import java.util.Objects;
     String project = System.getProperty(PROJECT_ID, System.getenv(PROJECT_ID));
 
     // Check if project is empty or null
-    Objects.requireNonNull(projectId, "PROJECT_ID has to be set either as a System variable or Environment variable");
+    Objects.requireNonNull(project, "PROJECT_ID has to be set either as a System variable or Environment variable");
     
     return TopicName.of(project, topic);
   }
